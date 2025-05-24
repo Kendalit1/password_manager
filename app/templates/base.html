@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Secure Password Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav style="background: #f8f9fa; padding: 15px 30px; border-bottom: 1px solid #ccc; margin-bottom: 30px;">
+  <a href="{{ url_for('home') }}" style="margin-right: 20px;">Главная</a>
+
+  {% if session.get('user_id') %}
+    <a href="{{ url_for('vault') }}" style="margin-right: 20px;">Vault</a>
+    <a href="{{ url_for('generate_password_view') }}" style="margin-right: 20px;">Генерация</a>
+    <a href="{{ url_for('dashboard') }}" style="margin-right: 20px;">Аналитика</a>
+    <a href="{{ url_for('logout') }}" style="float: right; color: red;">Выйти</a>
+  {% else %}
+    <a href="{{ url_for('login') }}" style="margin-right: 20px;">Войти</a>
+    <a href="{{ url_for('register') }}" style="margin-right: 20px;">Регистрация</a>
+  {% endif %}
+</nav>
+
+<div class="container">
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul style="color: red;">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+
+</div>
+
+</body>
+</html>

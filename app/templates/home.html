@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+
+<div style="padding: 40px; text-align: center;">
+  <h2>Добро пожаловать в Secure Password Manager</h2>
+  <p>Это веб-приложение для безопасной генерации, хранения и анализа паролей.</p>
+  {% if not session.get('user_id') %}
+    <p>
+      <a href="{{ url_for('register') }}">Зарегистрируйтесь</a> или
+      <a href="{{ url_for('login') }}">войдите</a>, чтобы начать.
+    </p>
+  {% else %}
+    <p>
+      Перейдите в <a href="{{ url_for('vault') }}">Vault</a> или
+      <a href="{{ url_for('generate_password_view') }}">создайте новый пароль</a>.
+    </p>
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Аналитика{% endblock %}
+{% block content %}
+
+<div style="padding: 30px;">
+  <h2>Панель аналитики</h2>
+  <p>Всего сохранённых паролей: {{ passwords|length }}</p>
+  <p>Шаблонных паролей: {{ weak_count }}</p>
+  <p>Известных из утечек: {{ breached_count }}</p>
+
+  <img src="data:image/png;base64,{{ plot_url }}" alt="График паролей" style="margin-top: 30px; max-width: 600px;">
+  <br><br>
+  <a href="{{ url_for('vault') }}">⬅ Назад в хранилище</a>
+</div>
+
+{% endblock %}

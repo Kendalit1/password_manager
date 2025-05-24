@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Vault{% endblock %}
+{% block content %}
+
+<h2>Ваши сохранённые пароли</h2>
+
+<form action="/generate_password" method="get" style="margin-bottom: 20px;">
+    <button type="submit">➕ Сгенерировать новый пароль</button>
+</form>
+
+{% if passwords %}
+    <ul>
+        {% for p in passwords %}
+            <li>
+                <strong>{{ p.value }}</strong> — {{ p.entropy }} бит
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Пароли ещё не добавлены.</p>
+{% endif %}
+
+<hr>
+<a href="/dashboard">Перейти в аналитику</a>
+
+{% endblock %}

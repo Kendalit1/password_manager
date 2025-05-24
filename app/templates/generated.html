@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Generated Password{% endblock %}
+{% block content %}
+
+<h2>Сгенерированный пароль</h2>
+
+<p><strong style="font-size: 1.3em;">{{ password }}</strong></p>
+<p>Энтропия: <strong>{{ entropy }}</strong> бит</p>
+
+<p>
+    {% if entropy < 40 %}
+        <span style="color:red;">Слабый пароль</span>
+    {% elif entropy < 60 %}
+        <span style="color:orange;">Средний пароль</span>
+    {% else %}
+        <span style="color:green;">Надёжный пароль</span>
+    {% endif %}
+</p>
+
+{% if breached %}
+    <p style="color: red;"><strong>⚠ Этот пароль найден в базе утечек!</strong></p>
+{% endif %}
+
+{% if template_like %}
+    <p style="color: darkorange;"><strong>⚠ Структура пароля похожа на шаблон.</strong></p>
+{% else %}
+    <p style="color: darkgreen;">Структура пароля нестандартная. Отлично!</p>
+{% endif %}
+
+<form method="POST" action="/save_password">
+    <input type="hidden" name="password" value="{{ password }}">
+    <input type="hidden" name="entropy" value="{{ entropy }}">
+    <button type="submit">Сохранить пароль</button>
+</form>
+
+<a href="/vault">⬅ Назад в хранилище</a>
+
+{% endblock %}
